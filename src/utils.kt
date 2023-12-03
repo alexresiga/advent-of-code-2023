@@ -1,7 +1,5 @@
-import java.io.BufferedReader
 import kotlin.io.path.Path
-import kotlin.io.path.bufferedReader
-import kotlin.io.path.inputStream
+import kotlin.io.path.readLines
 
 enum class Part {
     One, Two;
@@ -15,7 +13,6 @@ enum class Part {
 inline fun <reified T> T.println(): T = also { println(it) }
 
 inline fun day(block: (part: Part, input: List<String>) -> Any?) {
-    val input = Path("src/data.in").inputStream().bufferedReader().readLines()
-    block(Part.One, input)
-    block(Part.Two, input)
+    val input = Path("src/data.in").readLines()
+    Part.entries.forEach { block(it, input) }
 }
