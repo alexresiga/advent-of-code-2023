@@ -12,7 +12,17 @@ enum class Part {
 
 inline fun <reified T> T.println(): T = also { println(it) }
 
-inline fun day(both: Boolean = false, block: (part: Part, input: List<String>) -> Any?) {
+inline fun day(done: Boolean = false, name: String = "", block: (part: Part, input: List<String>) -> Any?) {
+    // TODO apply for past days too
     val input = Path("src/data.in").readLines()
-    Part.entries.forEach { block(it, input); if (!both) return }
+    when (done) {
+        false -> block(Part.One, input)
+        true -> {
+            println(name)
+            Part.entries.forEachIndexed { index, part ->
+                print("part ${index + 1}: ")
+                block(part, input)
+            }
+        }
+    }
 }
